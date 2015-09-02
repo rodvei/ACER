@@ -1,0 +1,11 @@
+Package: ACER
+Type: Package
+Title: Average Conditional Exceedance Rate Method as a Tool for Extreme Value Statistics
+Version: 1.0
+Date: 2015-05-13
+Author: Kristoffer Kofoed Roedvei
+Maintainer: Kristoffer Kofoed Roedvei <rodvei@stud.ntnu.no>
+Description: ACER is a package made for calculating average conditional exceedance rate (ACER). The package includes useful functions for data preparations, analysis and presentations of results.
+License: GPL-3
+Depends: 
+    R (>= 3.0), minpack.lm, stats, methods, Quandl
