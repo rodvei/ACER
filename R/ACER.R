@@ -9,17 +9,24 @@
 # Full process of filling out the ACER class
 ####################################################################################
 ACER<- function(X, ...) UseMethod("ACER")
-ACER.default<-function(X,k=1,CI=0.95, eta1=NULL, stationary=TRUE, method="general", 
+ACER.default<-function(X,k=1,CI=0.95, eta1=NULL, stationary=TRUE, method=c("general","gumbel"), 
                        check.weibull=TRUE, penalty=FALSE, alpha=0.05, neta=500,...){
+  
+  method<-match.arg(method)
+  if(!((length(X)>k&&is.numeric(X))&&is.logical(c(stationary,check.weibull,penalty))
+       &&is.numeric(c(k,CI,alpha,eta1, neta)))){
+    stop("Invalid 'input' value")
+  }else if(is.na(sum(c(k,CI,alpha,eta1,neta)))){
+    stop("Invalid 'input' value")
+  }else if(is.matrix(X)){
+    if(dim(X)[1]>dim(X)[2]){
+      stop("Realizations should be by rows. Suggested transformation <X=t(X)>")
+    }
+  }  
+  
+  
   Y<-ACERm(X,k=k,stationary=stationary,neta=500)
-  if(!(class(Y)=='ACER')){
-    print('Error, << X >> input most be corrct. See ?ACERm')
-    return(NULL)
-  }
-  if(!(method=='general'||method=='gumbel')){
-    print('method must be either << general >> or << gumbel >>')
-    return(NULL)
-  }
+  
   Xtemp=as.matrix(X) 
   if(min(dim(Xtemp))==1){tdist.CI<-FALSE
   }else{tdist.CI<-TRUE}
